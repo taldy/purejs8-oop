@@ -1,8 +1,6 @@
-# Pure.js \#7 (Eventloop, AJAX) examples
+# Pure.js \#8 (OOP) examples
 
 ``` bash
 npm install
 npm start
 ```
-
-REST test server: https://github.com/taldy/purejs7-rest-server
