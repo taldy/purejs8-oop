@@ -2,7 +2,8 @@
   "name": "purejs7examples",
   "version": "0.0.1",
   "scripts": {
-    "start": "http-server -o"
+    "start": "webpack && http-server -o",
+    "build": "webpack"
   },
   "author": "taldy",
   "license": "ISC",
