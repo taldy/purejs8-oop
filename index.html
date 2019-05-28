@@ -1,0 +1,684 @@
+<html>
+  <head>
+    <title>Pure.js #7 - eventloop, ajax</title>
+    <style>
+      body {
+        background: #444;
+        color: #ddd;
+        margin-bottom: 100px;
+        /* font-size: 20px; */
+      }
+
+      pre {
+        margin: 70px 0;
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        font-size: 20px;
+        margin: 5px;
+      }
+
+      button,
+      textarea {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pure.js #8. OOP</h1>
+
+    <h2>01. Class</h2>
+    <div id="container1">
+      <button class="create">create post</button>
+      <button class="update">update post</button>
+    </div>
+    <script>
+      (() => {
+        class Post {
+          constructor(text, author) {
+            this.text = text;
+            this.author = author;
+            this.updated = false;
+            console.log("post created");
+          }
+
+          update(value) {
+            this.text = value;
+            this.updated = true;
+            this.updatedAt = new Date().getTime();
+            console.log("post updated");
+          }
+        }
+
+        let post;
+
+        function create() {
+          post = new Post("some text", "Alex");
+          console.log("post", post);
+        }
+
+        function update() {
+          post.update(`Random value ${getRandomValue()}`);
+          console.log("post", post);
+        }
+
+        document
+          .querySelector("#container1 .create")
+          .addEventListener("click", create);
+        document
+          .querySelector("#container1 .update")
+          .addEventListener("click", update);
+      })();
+    </script>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>02. Inheritance. Constructor + prop</h2>
+    <div id="container2"><button class="create">create photo</button></div>
+    <script>
+      (() => {
+        class Post {
+          constructor(text, author) {
+            this.text = text;
+            this.author = author;
+            this.updated = false;
+            console.log("post created");
+          }
+
+          update(value) {
+            this.text = value;
+            this.updated = true;
+            this.updatedAt = new Date().getTime();
+            console.log("post updated");
+          }
+        }
+
+        class Photo extends Post {
+          constructor(text, photos, author) {
+            super(text, author); // should be at the begining of constructor
+
+            this.photos = photos;
+            console.log("photo created");
+          }
+        }
+
+        let photo;
+
+        function create() {
+          photo = new Photo(
+            "some text",
+            [
+              "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg"
+            ],
+            "Alex"
+          );
+          console.log("photo", photo);
+        }
+
+        document
+          .querySelector("#container2 .create")
+          .addEventListener("click", create);
+      })();
+    </script>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>03. Inheritance. Use parent method</h2>
+    <div id="container3">
+      <button class="create">create photo</button>
+      <button class="update">update photo</button>
+    </div>
+    <script>
+      (() => {
+        class Post {
+          constructor(text, author) {
+            this.text = text;
+            this.author = author;
+            this.updated = false;
+            console.log("post created");
+          }
+
+          update(value) {
+            this.text = value;
+            this.updated = true;
+            this.updatedAt = new Date().getTime();
+            console.log("post updated");
+          }
+        }
+
+        class Photo extends Post {
+          constructor(text, photos, author) {
+            super(text, author); // should be at the begining of constructor
+
+            this.photos = photos;
+            console.log("photo created");
+          }
+        }
+
+        let photo;
+
+        function create() {
+          photo = new Photo(
+            "some text",
+            [
+              "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg"
+            ],
+            "Alex"
+          );
+          console.log("photo", photo);
+        }
+
+        function update() {
+          photo.update(`Random value ${getRandomValue()}`);
+          console.log("photo", photo);
+        }
+
+        document
+          .querySelector("#container3 .create")
+          .addEventListener("click", create);
+        document
+          .querySelector("#container3 .update")
+          .addEventListener("click", update);
+      })();
+    </script>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>04. Inheritance. New method</h2>
+    <div id="container4">
+      <button class="create">create photo</button>
+      <button class="get-url">get photo URL</button>
+    </div>
+    <script>
+      (() => {
+        class Post {
+          constructor(text, author) {
+            this.text = text;
+            this.author = author;
+            this.updated = false;
+            console.log("post created");
+          }
+
+          update(value) {
+            this.text = value;
+            this.updated = true;
+            this.updatedAt = new Date().getTime();
+            console.log("post updated");
+          }
+        }
+
+        class Photo extends Post {
+          constructor(text, photos, author) {
+            super(text, author); // should be at the begining of constructor
+
+            this.photos = photos;
+            console.log("photo created");
+          }
+
+          getFirstPhotoURL() {
+            return this.photos[0];
+          }
+        }
+
+        let photo;
+
+        function create() {
+          photo = new Photo(
+            "some text",
+            [
+              "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg"
+            ],
+            "Alex"
+          );
+          console.log("photo", photo);
+        }
+
+        function getUrl() {
+          console.log("first photo url", photo.getFirstPhotoURL());
+        }
+
+        document
+          .querySelector("#container4 .create")
+          .addEventListener("click", create);
+        document
+          .querySelector("#container4 .get-url")
+          .addEventListener("click", getUrl);
+      })();
+    </script>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>05. Inheritance. Override method</h2>
+    <div id="container5">
+      <button class="create">create photo</button>
+      <button class="update">update</button>
+      <button class="update2">update2</button>
+    </div>
+    <script>
+      (() => {
+        class Post {
+          constructor(text, author) {
+            this.text = text;
+            this.author = author;
+            this.updated = false;
+            console.log("post created");
+          }
+
+          update(value) {
+            this.text = value;
+            this.updated = true;
+            this.updatedAt = new Date().getTime();
+            console.log("post updated");
+          }
+        }
+
+        class Photo extends Post {
+          constructor(text, photos, author) {
+            super(text, author); // should be at the begining of constructor
+
+            this.photos = photos;
+            console.log("photo created");
+          }
+
+          update(text, photos) {
+            super.update(text);
+            this.photos = photos || this.photos;
+          }
+        }
+
+        let photo;
+
+        function create() {
+          photo = new Photo(
+            "some text",
+            [
+              "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg"
+            ],
+            "Alex"
+          );
+          console.log("photo", photo);
+        }
+
+        function update() {
+          photo.update("new text");
+          console.log("photo", photo);
+        }
+
+        function update2() {
+          photo.update("new text", [
+            "https://www.w3schools.com/w3images/fjords.jpg",
+            "https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg"
+          ]);
+          console.log("photo", photo);
+        }
+
+        document
+          .querySelector("#container5 .create")
+          .addEventListener("click", create);
+        document
+          .querySelector("#container5 .update")
+          .addEventListener("click", update);
+        document
+          .querySelector("#container5 .update2")
+          .addEventListener("click", update2);
+      })();
+    </script>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>06. Incapsulation. Private property :(</h2>
+    <div id="container6">
+      <button class="create">create post</button>
+      <button class="update">update post</button>
+      <button class="update2">update private property</button>
+    </div>
+    <script>
+      (() => {
+        class Post {
+          constructor(text, author) {
+            this.text = text;
+            this.author = author;
+            this._updated = false;
+            console.log("post created");
+          }
+
+          update(value) {
+            this.text = value;
+            this._updated = true;
+            this._updatedAt = new Date().getTime();
+            console.log("post updated");
+          }
+        }
+
+        let post;
+
+        function create() {
+          post = new Post("some text", "Alex");
+          console.log("post", post);
+        }
+
+        function update() {
+          post.update(`Random value ${getRandomValue()}`);
+          console.log("post", post);
+        }
+
+        function update2() {
+          post._updated = false;
+          console.log("post", post);
+        }
+
+        document
+          .querySelector("#container6 .create")
+          .addEventListener("click", create);
+        document
+          .querySelector("#container6 .update")
+          .addEventListener("click", update);
+        document
+          .querySelector("#container6 .update2")
+          .addEventListener("click", update2);
+      })();
+    </script>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>07. Incapsulation. TC39 Private properties proposal</h2>
+    <div id="container7">
+      <button class="create">create post</button>
+      <button class="update">update post</button>
+    </div>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>08. Incapsulation. get/set. formatted updated time</h2>
+    <div id="container8">
+      <button class="create">create post</button>
+      <button class="update">update post</button>
+    </div>
+    <script>
+      (() => {
+        class Post {
+          constructor(text, author) {
+            this.text = text;
+            this.author = author;
+            this._updated = false;
+            console.log("post created");
+          }
+
+          update(value) {
+            this.text = value;
+            this._updated = true;
+            this._updatedAt = new Date().getTime();
+            console.log("post updated");
+          }
+
+          get updatedTime() {
+            return moment(this._updatedAt).format("LLL");
+          }
+        }
+
+        let post;
+
+        function create() {
+          post = new Post("some text", "Alex");
+          console.log("post", post);
+        }
+
+        function update() {
+          post.update(`Random value ${getRandomValue()}`);
+          console.log("post", post);
+          console.log("post updated time:", post.updatedTime);
+        }
+
+        document
+          .querySelector("#container8 .create")
+          .addEventListener("click", create);
+        document
+          .querySelector("#container8 .update")
+          .addEventListener("click", update);
+      })();
+    </script>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>09. Incapsulation. get/set. User fullName</h2>
+    <div id="container9">
+      <button class="create">create user</button>
+      <button class="get">get full name</button>
+      <button class="set">set full name</button>
+    </div>
+    <script>
+      (() => {
+        class User {
+          constructor(email, firstName, lastName) {
+            this.email = email;
+            this.firstName = firstName;
+            this.lastName = lastName;
+          }
+          get fullName() {
+            return `${this.firstName} ${this.lastName}`;
+          }
+          set fullName(fullName) {
+            const [firstName, lastName] = fullName.split(" ");
+            this.firstName = firstName;
+            this.lastName = lastName;
+          }
+        }
+
+        let user;
+
+        function create() {
+          user = new User("info@example.com", "Alex", "Dziga");
+          console.log("user", user);
+        }
+
+        function getFullname() {
+          console.log("user fullname", user.fullName);
+        }
+        function setFullname() {
+          user.fullName = prompt("User Full Name", user.fullName);
+          console.log("user", user);
+        }
+
+        document
+          .querySelector("#container9 .create")
+          .addEventListener("click", create);
+        document
+          .querySelector("#container9 .get")
+          .addEventListener("click", getFullname);
+        document
+          .querySelector("#container9 .set")
+          .addEventListener("click", setFullname);
+      })();
+    </script>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>10. Polymorphism</h2>
+    <div id="container10">
+      <label> <input type="radio" name="post" value="post" /> Post </label>
+      <label> <input type="radio" name="post" value="photo" /> Photo </label>
+      <label> <input type="radio" name="post" value="video" /> Video </label>
+      <label>
+        <input type="radio" name="post" value="comment" /> Comment
+      </label>
+      <div class="preview" style="font-size: 20px;"></div>
+    </div>
+    <script>
+      (() => {
+        class Post {
+          constructor(text) {
+            this.text = text;
+          }
+
+          getPreview() {
+            return `<div>${this.text}</div>`;
+          }
+        }
+
+        class Photo extends Post {
+          constructor(text, imgUrl) {
+            super(text);
+            this.imgUrl = imgUrl;
+          }
+
+          getPreview() {
+            return `<div>${this.text}</div><img src="${this.imgUrl}">`;
+          }
+        }
+
+        class Video extends Post {
+          constructor(text, youtubeId) {
+            super(text);
+            this.youtubeId = youtubeId;
+          }
+
+          getPreview() {
+            return `<div>${this.text}</div><iframe width="420" height="315"
+                              src="https://www.youtube.com/embed/${
+                                this.youtubeId
+                              }">
+                              </iframe>`;
+          }
+        }
+
+        class Comment {
+          getPreview() {}
+        }
+
+        const objects = {};
+        objects.post = new Post("text post content");
+        objects.photo = new Photo(
+          "post with photo",
+          "https://www.w3schools.com/w3images/fjords.jpg"
+        );
+        objects.video = new Video("post with video", "bGyEteRqGIY");
+        objects.comment = new Comment();
+
+        const previewEl = document.querySelector("#container10 .preview");
+
+        function onChange(event) {
+          const object = objects[event.target.value];
+
+          console.log(
+            object instanceof Post ? "instanceof Post" : "NOT instanceof Post"
+          );
+          if (object instanceof Post) {
+            previewEl.innerHTML = object.getPreview();
+          } else {
+            previewEl.innerHTML = "";
+          }
+        }
+
+        document
+          .querySelectorAll("#container10 input[type=radio]")
+          .forEach(el => el.addEventListener("change", onChange));
+      })();
+    </script>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>12. Prototypes</h2>
+    <div id="container12">
+      <button class="create-post">create post</button>
+      <button class="create-photo">create photo</button>
+    </div>
+    <script>
+      (() => {
+        class Post {
+          constructor(text, author) {
+            this.text = text;
+            this.author = author;
+            this.updated = false;
+            console.log("post created");
+          }
+
+          update(value) {
+            this.text = value;
+            this.updated = true;
+            this.updatedAt = new Date().getTime();
+            console.log("post updated");
+          }
+        }
+
+        class Photo extends Post {
+          constructor(text, photos, author) {
+            super(text, author); // should be at the begining of constructor
+
+            this.photos = photos;
+            console.log("photo created");
+          }
+
+          update(text, photos) {
+            super.update(text);
+            this.photos = photos || this.photos;
+          }
+        }
+
+        function createPost() {
+          const post = new Post("some text");
+          console.log("post", post);
+        }
+
+        function createPhoto() {
+          const photo = new Photo("some text", [
+            "https://www.w3schools.com/w3images/fjords.jpg"
+          ]);
+          console.log("photo", photo);
+
+          Photo.prototype.foo = 5;
+        }
+
+        document
+          .querySelector("#container12 .create-post")
+          .addEventListener("click", createPost);
+        document
+          .querySelector("#container12 .create-photo")
+          .addEventListener("click", createPhoto);
+      })();
+    </script>
+
+    <pre>/////////////////////////////////////////////////////////////////////</pre>
+
+    <h2>13. Polyfill</h2>
+    <div id="container13">
+      <button class="run">run custom method</button>
+      <button class="attach">attach polyfill</button>
+    </div>
+    <script>
+      (() => {
+        function run() {
+          const array = Array(10).fill(1).map((_, index) => index);
+          console.log('array', [ ...array ]);
+
+          array.randomSort();
+
+          console.log('random order', array);
+        }
+
+        function attach() {
+          Array.prototype.randomSort = function() {
+            this.sort(() => Math.random() - 0.5);
+          }
+        }
+
+        document
+          .querySelector("#container13 .run")
+          .addEventListener("click", run);
+        document
+          .querySelector("#container13 .attach")
+          .addEventListener("click", attach);
+      })();
+    </script>
+
+    <script>
+      function getRandomValue() {
+        return Math.round(Math.random() * 100);
+      }
+    </script>
+    <script src="dist/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+  </body>
+</html>

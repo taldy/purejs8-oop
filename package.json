@@ -1,0 +1,21 @@
+{
+  "name": "purejs7examples",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "http-server -o"
+  },
+  "author": "taldy",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-private-methods": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "http-server": "^0.11.1",
+    "webpack-dev-server": "^3.4.1"
+  },
+  "browserslist": [
+    ">0.25%, not dead"
+  ]
+}
